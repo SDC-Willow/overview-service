@@ -41,6 +41,14 @@ CREATE TABLE IF NOT EXISTS features (
   value varchar(100)
 );
 
+CREATE TABLE IF NOT EXISTS photos (
+  id int AUTO_INCREMENT primary key,
+  style_id int,
+  FOREIGN KEY (style_id) REFERENCES styles(id),
+  url varchar(3000),
+  thumbnail_url varchar(3000)
+);
+
 
 -- LOAD DATA LOCAL INFILE '~/Downloads/product.csv'
 -- INTO TABLE products
@@ -69,3 +77,16 @@ CREATE TABLE IF NOT EXISTS features (
 -- ENCLOSED BY '"'
 -- LINES TERMINATED BY '\n'
 -- IGNORE 1 ROWS;
+
+-- LOAD DATA LOCAL INFILE '~/Downloads/1mil.csv'
+-- INTO TABLE photos
+-- FIELDS TERMINATED BY ','
+-- ENCLOSED BY '"'
+-- LINES TERMINATED BY '\n'
+-- IGNORE 1 ROWS;
+
+-- LOAD DATA LOCAL INFILE '~/Downloads/6mil.csv'
+-- INTO TABLE photos
+-- FIELDS TERMINATED BY ','
+-- ENCLOSED BY '"'
+-- LINES TERMINATED BY '\n'
