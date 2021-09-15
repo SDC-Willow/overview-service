@@ -33,6 +33,14 @@ CREATE TABLE IF NOT EXISTS skus (
   quantity int
 );
 
+CREATE TABLE IF NOT EXISTS features (
+  id int AUTO_INCREMENT primary key,
+  product_id int,
+  FOREIGN KEY (product_id) REFERENCES products(id),
+  feature varchar(100),
+  value varchar(100)
+);
+
 
 -- LOAD DATA LOCAL INFILE '~/Downloads/product.csv'
 -- INTO TABLE products
@@ -50,6 +58,13 @@ CREATE TABLE IF NOT EXISTS skus (
 
 -- LOAD DATA LOCAL INFILE '~/Downloads/skus.csv'
 -- INTO TABLE skus
+-- FIELDS TERMINATED BY ','
+-- ENCLOSED BY '"'
+-- LINES TERMINATED BY '\n'
+-- IGNORE 1 ROWS;
+
+-- LOAD DATA LOCAL INFILE '~/Downloads/features.csv'
+-- INTO TABLE features
 -- FIELDS TERMINATED BY ','
 -- ENCLOSED BY '"'
 -- LINES TERMINATED BY '\n'
