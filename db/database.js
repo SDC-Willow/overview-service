@@ -38,12 +38,12 @@ const getProduct = (productId) => {
 
 const getStyles = (productId) => {
   return db.query(`Select concat(product_id) product_id from styles where product_id=${productId} limit 1`).then(([result]) => {
-    console.log('results', result[0])
+    // console.log('results', result[0])
     if(result[0] === undefined) {
       throw new Error('No styles for this product id')
     }
     let data = result[0]
-    console.log('data', data);
+    // console.log('data', data);
     return db.query(`Select id as style_id, name, sale_price, original_price, CAST(if(${"`default?`"}, 'true', 'false')as JSON) ${"`default?`"} from styles where product_id=${productId}`)
     .then((results) => {
       if(results !== undefined && results[0].length !== 0) {
@@ -54,8 +54,31 @@ const getStyles = (productId) => {
           return style
         })
       })
-     return Promise.all(photos).then(() => {
-      return data
+      return Promise.all(photos).then(() => {
+        return data
+     })
+     .then((data) => {
+       let skus = data.results.map((style) => {
+         return db.query(`Select id, quantity, size from skus where style_id=${style.style_id}`).then(([results]) => {
+           let sku = results.map((skus) => {
+            let {id, ...rest} = skus
+            if(style.skus === undefined) {
+              style.skus = {}
+            }
+            style.skus[id] = rest
+            return style
+           })
+           return Promise.all(sku).then(() => {
+             return sku
+           })
+         })
+         return Promise.all(skus).then((result) => {
+          return result
+         })
+       })
+       return Promise.all(skus).then((results) => {
+        return data
+       })
      })
     }
     }).catch((er) => console.log(er))
