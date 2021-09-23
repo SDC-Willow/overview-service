@@ -1,11 +1,19 @@
-const db = require('./db/database.js')
+const {getProduct, getStyles} = require('./db/database.js')
 const express = require('express');
 const app = express();
 
 
-app.get('/products/:productid', (req, res) => {
-  db(req.params.productid).then((results) => {
+app.get('/products/:product_id', (req, res) => {
+  getProduct(req.params.product_id).then((results) => {
    res.send(results)
+  }).catch((err) => {
+    res.status(404).send(err.message);
+  })
+})
+
+app.get('/products/:product_id/styles', (req, res) => {
+  getStyles(req.params.product_id).then((results) => {
+    res.send(results)
   }).catch((err) => {
     res.status(404).send(err.message);
   })

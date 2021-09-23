@@ -16,7 +16,7 @@ const getProduct = (productId) => {
       }
       return results;
     })
-  })
+  }).catch((err) => {throw new Error('Invalid product id')})
 }
 // let features = []
 // db.query('Select * from products where id=1').then(([[results]]) => {
@@ -35,4 +35,33 @@ const getProduct = (productId) => {
 //    id: 9999
 //   }}).catch((err) => console.log(err)).then((re) => console.log(re))
 // }).catch((err) => console.log(err));
-module.exports = getProduct;
+
+const getStyles = (productId) => {
+  return db.query(`Select concat(product_id) product_id from styles where product_id=${productId} limit 1`).then(([result]) => {
+    console.log('results', result[0])
+    if(result[0] === undefined) {
+      throw new Error('No styles for this product id')
+    }
+    let data = result[0]
+    console.log('data', data);
+    return db.query(`Select id as style_id, name, sale_price, original_price, CAST(if(${"`default?`"}, 'true', 'false')as JSON) ${"`default?`"} from styles where product_id=${productId}`)
+    .then((results) => {
+      if(results !== undefined && results[0].length !== 0) {
+      data.results = results[0];
+      let photos = data.results.map((style) => {
+        return db.query(`Select thumbnail_url, url from photos where style_id=${style.style_id}`).then(([results]) => {
+          style.photos = results;
+          return style
+        })
+      })
+     return Promise.all(photos).then(() => {
+      return data
+     })
+    }
+    }).catch((er) => console.log(er))
+  })
+}
+module.exports = {
+  getProduct,
+  getStyles
+}
