@@ -5,10 +5,10 @@ use Overview;
 CREATE TABLE IF NOT EXISTS products (
  id INT AUTO_INCREMENT primary key,
  name varchar(50),
- description varchar(1000),
  slogan varchar(200),
+ description varchar(1000),
  category varchar(50),
- default_price int
+ default_price varchar(100)
 );
 
 -- CREATE TABLE IF NOT EXISTS cart (
@@ -85,8 +85,32 @@ CREATE TABLE IF NOT EXISTS photos (
 -- LINES TERMINATED BY '\n'
 -- IGNORE 1 ROWS;
 
+-- LOAD DATA LOCAL INFILE '~/Downloads/2mil.csv'
+-- INTO TABLE photos
+-- FIELDS TERMINATED BY ','
+-- ENCLOSED BY '"'
+-- LINES TERMINATED BY '\n';
+
+-- LOAD DATA LOCAL INFILE '~/Downloads/3mil.csv'
+-- INTO TABLE photos
+-- FIELDS TERMINATED BY ','
+-- ENCLOSED BY '"'
+-- LINES TERMINATED BY '\n';
+
+-- LOAD DATA LOCAL INFILE '~/Downloads/4mil.csv'
+-- INTO TABLE photos
+-- FIELDS TERMINATED BY ','
+-- ENCLOSED BY '"'
+-- LINES TERMINATED BY '\n';
+
+-- LOAD DATA LOCAL INFILE '~/Downloads/5mil.csv'
+-- INTO TABLE photos
+-- FIELDS TERMINATED BY ','
+-- ENCLOSED BY '"'
+-- LINES TERMINATED BY '\n';
+
 -- LOAD DATA LOCAL INFILE '~/Downloads/6mil.csv'
 -- INTO TABLE photos
 -- FIELDS TERMINATED BY ','
 -- ENCLOSED BY '"'
--- LINES TERMINATED BY '\n'
+-- LINES TERMINATED BY '\n';
