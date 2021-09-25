@@ -60,6 +60,9 @@ const getStyles = (productId) => {
      .then((data) => {
        let skus = data.results.map((style) => {
          return db.query(`Select id, quantity, size from skus where style_id=${style.style_id}`).then(([results]) => {
+           if(results.length === 0) {
+             style.skus = null
+           }
            let sku = results.map((skus) => {
             let {id, ...rest} = skus
             if(style.skus === undefined) {
@@ -75,10 +78,10 @@ const getStyles = (productId) => {
          return Promise.all(skus).then((result) => {
           return result
          })
-       })
-       return Promise.all(skus).then((results) => {
-        return data
-       })
+        })
+        return Promise.all(skus).then((results) => {
+         return data
+      })
      })
     }
     }).catch((er) => console.log(er))
