@@ -87,7 +87,14 @@ const getStyles = (productId) => {
     }).catch((er) => console.log(er))
   })
 }
+
+const postCart = (skuId) => {
+  return db.query(`Insert into cart(sku_id) values(${skuId})`).then((response) => {
+    console.log(response)
+  })
+}
 module.exports = {
   getProduct,
-  getStyles
+  getStyles,
+  postCart
 }

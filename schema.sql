@@ -11,9 +11,6 @@ CREATE TABLE IF NOT EXISTS products (
  default_price varchar(100)
 );
 
--- CREATE TABLE IF NOT EXISTS cart (
-
--- )
 
 CREATE TABLE IF NOT EXISTS styles (
  id INT AUTO_INCREMENT primary key,
@@ -49,7 +46,11 @@ CREATE TABLE IF NOT EXISTS photos (
   thumbnail_url varchar(3000)
 );
 
-
+CREATE TABLE IF NOT EXISTS cart (
+  id int AUTO_INCREMENT primary key,
+  sku_id int,
+  FOREIGN KEY(sku_id) REFERENCES skus(id)
+);
 -- LOAD DATA LOCAL INFILE '~/Downloads/product.csv'
 -- INTO TABLE products
 -- FIELDS TERMINATED BY ','
