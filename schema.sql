@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS styles (
  name varchar(100),
  sale_price int,
  original_price int,
- default_style int
+ default_style boolean
 );
 
 CREATE TABLE IF NOT EXISTS skus (
