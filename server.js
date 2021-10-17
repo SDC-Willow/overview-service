@@ -6,6 +6,9 @@ const path = require('path')
 app.use(body.json());
 app.use(body.urlencoded({extended: false}))
 
+app.get('/', (req, res) => {
+  res.send('test');
+})
 app.get('/products/:product_id', (req, res) => {
   getProduct(req.params.product_id).then((results) => {
    res.send(results)
