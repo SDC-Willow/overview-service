@@ -32,12 +32,12 @@ app.post('/cart', (req, res) => {
   }).catch((err) => {console.log(err)})
 })
 
-app.get('/loaderio-d16fa8610802a4c5b664c7071e00ecc2', (req, res) => {
+app.get('/loaderio-0fe6ce76b1bcf07dac806ea5c19751cd', (req, res) => {
   const options = {
     root: path.join(__dirname)
 };
 
-const fileName = 'loaderio-d16fa8610802a4c5b664c7071e00ecc2.txt';
+const fileName = 'loaderio-0fe6ce76b1bcf07dac806ea5c19751cd.txt';
 res.sendFile(fileName, options, (err) => {
     if (err) {
         console.log(err);
