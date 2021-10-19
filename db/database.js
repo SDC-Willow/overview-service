@@ -89,9 +89,7 @@ const getStyles = (productId) => {
 }
 
 const postCart = (skuId) => {
-  return db.query(`Insert into cart(sku_id) values(${skuId})`).then(() => {
     return db.query(`Update skus set quantity = quantity + 1 where id=${skuId}`)
-  });
 }
 module.exports = {
   getProduct,
