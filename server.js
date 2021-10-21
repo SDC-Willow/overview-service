@@ -8,23 +8,49 @@ app.use(body.json());
 app.use(body.urlencoded({extended: false}))
 
 const redisPort = 6379;
-const client = redis.creatClient(redisPort);
-
+const client = redis.createClient(redisPort);
+const getProductCache = (req, res, next) => {
+  const {product_id} =  req.params;
+  client.get(product_id , (err, results) => {
+    if(err) {
+      next();
+    } if(results !== null) {
+      res.send(JSON.parse(results))
+    } else {
+      next();
+    }
+  })
+}
+const getStylesCache = (req, res, next) => {
+  const {product_id} =  req.params;
+  client.get(product_id + 'Style', (err, results) => {
+    if(err) {
+      next();
+    } if(results !== null) {
+      res.send(JSON.parse(results))
+    } else {
+      next();
+    }
+  })
+}
 app.get('/', (req, res) => {
   res.send('test');
 })
-app.get('/products/:product_id', (req, res) => {
+app.get('/products/:product_id', getProductCache, (req, res) => {
   getProduct(req.params.product_id).then((results) => {
     const productsResults = req.params.product_id;
-    client.setex(productsResults, 3600, results);
-   res.send(results)
+    client.setex(productsResults, 3600, JSON.stringify(results));
+    res.send(results)
   }).catch((err) => {
     res.status(404).send(err.message);
   })
 })
 
-app.get('/products/:product_id/styles', (req, res) => {
+app.get('/products/:product_id/styles', getStylesCache, (req, res) => {
   getStyles(req.params.product_id).then((results) => {
+    const productStyle = req.params.product_id + 'Style';
+    console.log(productStyle);
+    client.setex(productStyle, 3600, JSON.stringify(results));
     res.send(results)
   }).catch((err) => {
     res.status(404).send(err.message);
