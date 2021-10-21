@@ -1,5 +1,5 @@
 const db = require('./login.js');
-
+const redis = require('redis');
 db.authenticate().then(() => console.log('connected to db')).catch((err) => console.log(err));
 
 // const Products = db.define('products');
