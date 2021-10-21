@@ -2,15 +2,21 @@ const {getProduct, getStyles, postCart} = require('./db/database.js')
 const express = require('express');
 const app = express();
 const body = require('body-parser');
-const path = require('path')
+const path = require('path');
+const redis = require('redis');
 app.use(body.json());
 app.use(body.urlencoded({extended: false}))
+
+const redisPort = 6379;
+const client = redis.creatClient(redisPort);
 
 app.get('/', (req, res) => {
   res.send('test');
 })
 app.get('/products/:product_id', (req, res) => {
   getProduct(req.params.product_id).then((results) => {
+    const productsResults = req.params.product_id;
+    client.setex(productsResults, 3600, results);
    res.send(results)
   }).catch((err) => {
     res.status(404).send(err.message);
