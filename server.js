@@ -55,6 +55,7 @@ app.get('/products/:product_id/styles', getStylesCache, (req, res) => {
   }).catch((err) => {
     const productStyle = req.params.product_id + 'Style';
     client.setex(productStyle, 3600, JSON.stringify({}));
+
     res.status(200).send({});
   })
 })
